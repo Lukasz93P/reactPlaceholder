@@ -4,6 +4,7 @@ import Address from '../../common/details/Address';
 import CompanyData from '../../common/details/CompanyData';
 import Contact from '../../common/details/Contact';
 import PersonalData from '../../common/details/PersonalData';
+import DeleteButton from '../../common/buttons/built/DeleteButton';
 
 export default props => {
     const {address, company, onDelete} = props;
@@ -19,7 +20,7 @@ export default props => {
                 <div className="p-3 w-100 m-auto"><CompanyData {...company}/></div>
             </div>
             <div className="col-12 self-align-center text-center">
-                <button className="btn btn-danger" onClick={onDelete}>Delete</button>
+                <DeleteButton onClick={onDelete} text="Delete"/>
             </div>
         </div>);
 }

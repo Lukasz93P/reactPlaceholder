@@ -8,7 +8,7 @@ import WithLink from '../common/hoc/WithLink';
  */
 const UserCard = props => {
     const {classes = []} = props;
-    const {username, email} = props.user;
+    const {username, email} = props.data;
 
     return (
         <div className={`card text-center p-3 m-3 no-underline ${classes.join(' ')}`}>

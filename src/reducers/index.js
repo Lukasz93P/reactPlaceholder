@@ -1,7 +1,9 @@
 import * as redux from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
+
 import {reducer as formReducer} from 'redux-form';
+
 import {usersReducer, userReducer} from "./users/usersReducers";
 
 export default () => {

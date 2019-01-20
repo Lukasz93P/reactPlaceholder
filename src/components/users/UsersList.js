@@ -2,34 +2,52 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {Link, Switch, Route} from 'react-router-dom';
 
-import UserCard from './UserCard';
 import * as usersActions from '../../actions/users/usersActions';
 import UserDetails from './details/UserDetails';
-import Loader from '../common/loadings/BasicLoader';
 import UserSearching from './searching/UserSearching';
+import DeleteButton from '../common/buttons/built/DeleteButton';
+import SearchButton from '../common/buttons/built/SearchButton';
+import MaterializeTests from './MaterializeTests';
+import UsersCardsList from './UsersCardsList';
 
-class UsersList extends PureComponent {
+class UsersList extends React.Component {
     componentDidMount = () => {
+        this.dispatchSearchAction();
+    };
+
+    componentDidUpdate = (prevProps, prevState) => {
+        if (prevProps.searchConditions !== this.props.searchConditions) {
+            this.dispatchSearchAction();
+        }
+    };
+
+    dispatchSearchAction = () => {
         const {searchConditions} = this.props;
         this.props.dispatch(usersActions.fetchUsers(searchConditions ? searchConditions : {}));
     };
 
-    render = () => {
-        const usersList = this.props.data ? this.props.data.map(user => <UserCard user={user} key={user.id}
-                                                                                  link={`/users/${user.id}`}/>)
-            : <Loader/>;
+    constClearSearchConditions = () => {
+        this.props.dispatch(usersActions.searchUsersInit());
+    };
 
+    render = () => {
+        const {searchConditions} = this.props;
         return (
             <div className="row container-fluid justify-content-center">
-                <Route>
-                </Route>
+                {/*<MaterializeTests/>*/}
                 <Switch>
-                    <Route exact path="/users" render={() => <div className="container-fluid row justify-content-center">
-                        <div className="text-center m-auto p-3 col-12"><Link to={"/users/search"}>
-                            <button className="btn btn-lg btn-secondary">Search</button>
-                        </Link></div>
-                        {usersList}
-                    </div>}/>
+                    <Route exact path="/users"
+                           render={() => <div className="container-fluid row justify-content-center">
+                               <div className="text-center m-auto p-3 col-12">
+                                   {searchConditions ?
+                                       <DeleteButton text="Show all"
+                                                     onClick={this.constClearSearchConditions}/>
+                                       : <Link to={"/users/search"}>
+                                           <SearchButton text="Search"/>
+                                       </Link>}
+                               </div>
+                               <UsersCardsList data={this.props.data}/>
+                           </div>}/>
                     <Route exact path="/users/search" component={UserSearching}/>
                     <Route exact path="/users/:id" component={UserDetails}/>
                 </Switch>

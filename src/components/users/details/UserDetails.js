@@ -1,20 +1,19 @@
 import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 
-import {fetchUserById, deleteUserById} from "../../../actions/users/usersActions";
+import {fetchUserById, fetchUserByIdInit, deleteUserById} from "../../../actions/users/usersActions";
 import WithDelete from '../../common/hoc/WithDelete';
 import UserInfo from './UserInfo';
-import Loader from '../../common/loadings/BasicLoader';
+import LoaderWithContent from '../../common/loadings/LoaderWithContent';
 
 class UserDetails extends PureComponent {
-    componentDidMount = () => {
-        const userId = this.props.match.params.id;
-        this.props.dispatch(fetchUserById(userId));
+    componentWillUnmount = () => {
+        this.props.dispatch(fetchUserByIdInit());
     };
 
     render = () => {
         const user = this.props.data;
-        const elementToRender = user ? <UserInfo {...user} onDelete={this.props.onDelete}/> : <Loader/>;
+        const elementToRender = user ? <UserInfo {...user} onDelete={this.props.onDelete}/> : null;
         return (
             <div className="container-fluid row m-auto align-items-center">
                 {elementToRender}
@@ -27,4 +26,4 @@ function mapStateToProps(state) {
     return state.user;
 }
 
-export default connect(mapStateToProps)(WithDelete(UserDetails, deleteUserById));
+export default connect(mapStateToProps)(LoaderWithContent(WithDelete(UserDetails, deleteUserById), fetchUserById));

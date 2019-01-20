@@ -1,13 +1,13 @@
 import React from 'react';
+import {Input} from 'react-materialize';
 
 export default ({input, type, label, className, preSymbol, postSymbol, meta: {touched, error, warning}}) =>
     <div className="form-group">
-        <label>{label}</label>
         <div className="input-group">
             {preSymbol && <div className="input-group-prepend">
                 <div className="input-group-text">{preSymbol}</div>
             </div>}
-            <input type={type} className={className} {...input}/>
+            <Input type={type} className={className} {...input} label={label}/>
             {postSymbol && <div className="input-group-append">
                 <div className="input-group-text">{postSymbol}</div>
             </div>}

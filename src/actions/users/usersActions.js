@@ -8,6 +8,8 @@ import {
     DELETE_USER_BY_ID_INIT,
     DELETE_USER_BY_ID_SUCCESS,
     DELETE_USER_BY_ID_FAILED,
+    SEARCH_USER_INIT,
+    SEARCH_USER_CONDITIONS_SUBMITTED,
 } from "./actionTypes";
 import UsersService from '../../services/axios/users/UsersService';
 
@@ -66,8 +68,8 @@ export const fetchUserById = id => {
     };
 };
 
-const fetchUserByIdInit = () => {
-    return {type: FETCH_USER_BY_ID_INIT, asdasdasd: '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'};
+export const fetchUserByIdInit = () => {
+    return {type: FETCH_USER_BY_ID_INIT};
 };
 
 const fetchUserByIdSuccess = user => {
@@ -103,4 +105,12 @@ const deleteUserByIdSuccess = deletedUserId => {
 
 const deleteUserByIdFailed = errors => {
     return {type: DELETE_USER_BY_ID_FAILED, payload: errors};
+};
+
+export const searchUsersInit = () => {
+    return {type: SEARCH_USER_INIT};
+};
+
+export const searchUserConditionsSubmitted = conditions => {
+    return {type: SEARCH_USER_CONDITIONS_SUBMITTED, payload: conditions};
 };
